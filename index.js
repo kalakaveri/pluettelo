@@ -67,6 +67,7 @@ const generateId = () => {
 
 app.post('/api/persons', (request, response) => {
   const body = request.body
+  console.log('hyvää paskaa :D')
 
   if (!body.name || !body.number) {
     return response.status(400).json({ 
