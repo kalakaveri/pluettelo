@@ -6,6 +6,7 @@ const app = express()
 morgan.token('body', (req, res) => JSON.stringify(req.body));
 app.use(morgan(':method :url :status :req[content-length] - :response-time ms :body'))
 app.use(express.static('build'))
+app.use(express.json())
 app.use(cors())
 
 const requestLogger = (request, response, next) => {
@@ -67,7 +68,7 @@ const generateId = () => {
 
 app.post('/api/persons', (request, response) => {
   const body = request.body
-  console.log('hyvää paskaa :D')
+  console.log('pappa body: ', body)
 
   if (!body.name || !body.number) {
     return response.status(400).json({ 
