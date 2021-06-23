@@ -5,7 +5,7 @@ const cors = require('cors')
 const app = express()
 const Person = require('./models/person')
 
-morgan.token('body', (req, res) => JSON.stringify(req.body));
+morgan.token('body', (req) => JSON.stringify(req.body))
 app.use(morgan(':method :url :status :req[content-length] - :response-time ms :body'))
 app.use(express.static('build'))
 app.use(express.json())
@@ -49,8 +49,8 @@ app.get('/info', (req, res) => {
 })
 
 app.delete('/api/persons/:id', (request, response, next) => {
-	Person.findByIdAndRemove(request.params.id)
-    .then(result => {
+  Person.findByIdAndRemove(request.params.id)
+    .then(() => {
       response.status(204).end()
     })
     .catch(error => next(error))
@@ -66,10 +66,10 @@ app.post('/api/persons', (request, response, next) => {
   }
   const persons = []
   Person.find({ name: body.name }).lean().exec(function(err, docs) {
-      docs.forEach(d => persons.concat(d.name))
+    docs.forEach(d => persons.concat(d.name))
   })
 
-	if (persons.length === 0) {
+  if (persons.length === 0) {
     const person = new Person({
       name: body.name,
       number: body.number
